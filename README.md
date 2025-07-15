@@ -1,104 +1,171 @@
-Please note that Oryol is currently not actively maintained and hasn't been for a long time, 
-my focus is currently on the Sokol headers and (from time to time) on the Chips emulator stuff.
+# Oryol 项目学习笔记
 
-# Oryol
- 
-A small, portable and extensible 3D coding framework written in C++:
+欢迎来到 Oryol 项目学习笔记！这里包含了完整的项目架构分析、技术原理详解和学习路径指南。
 
-- simple [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) coding style and APIs
-- extensible through external code modules living in git repositories
-- runs on OSX, Linux (incl RaspberryPi), Windows, iOS, Android, emscripten, from the same C++ source
-- renders through GL, GLES2, WebGL, Metal, D3D11 from same shader source
-- produces small executables (e.g. emscripten WebGL demos starting at around 100 Kbytes)
-- async data loading from web or disc 
+## 📚 文档导航
 
-### Build Status:
+### 1. [项目架构分析](oryol-architecture.md)
+- **整体架构图**: 包含应用层、核心模块层、平台抽象层等
+- **模块依赖关系**: 清晰的模块层次和依赖关系图
+- **核心模块详解**: Core、IO、Gfx、Input 等模块的详细说明
+- **工作流程**: 应用启动、资源加载、渲染等关键流程
+- **技术原理**: 跨平台抽象、内存管理、异步处理等核心技术
 
-|Platform|Build Status|
-|--------|------|
-|OSX + Linux (OpenGL)|[![Build Status](https://travis-ci.org/floooh/oryol.svg?branch=master)](https://travis-ci.org/floooh/oryol)|
-|Windows (OpenGL + D3D11)|[![Build status](https://ci.appveyor.com/api/projects/status/hn5sup2y532h64jg/branch/master?svg=true)](https://ci.appveyor.com/project/floooh/oryol/branch/master)|
+### 2. [技术原理深度分析](oryol-technical-principles.md)
+- **应用生命周期管理**: 状态机模式和平台抽象策略
+- **内存管理策略**: 自定义容器设计和内存分配策略
+- **异步 IO 系统**: URL 和 Assign 系统、可插拔文件系统
+- **图形渲染架构**: 渲染后端抽象、资源管理系统、着色器编译
+- **输入系统设计**: 统一输入抽象和事件系统
+- **构建系统原理**: Fips 构建工具和模块依赖管理
+- **性能优化技术**: 内存池优化和渲染优化
+- **跨平台兼容性**: 条件编译策略和 API 抽象层
+- **错误处理机制**: 断言系统和错误状态码
+- **扩展机制**: 插件系统设计
 
-### Live Demos:
+### 3. [学习路径指南](learning-path.md)
+- **学习目标**: 明确的学习成果预期
+- **学习阶段**: 四个阶段的学习计划
+- **实践任务**: 每个阶段的具体实践要求
+- **学习资源**: 官方文档、示例代码、外部资源
+- **学习建议**: 高效学习的方法和技巧
+- **常见问题**: 编译、运行时、性能问题的解决方案
 
-- Oryol Core Samples: http://floooh.github.io/oryol/
-- Oryol Extension Samples: http://floooh.github.io/oryol-samples/
-- KC85 emulator: http://floooh.github.io/virtualkc/
+## 🎯 快速开始
 
-### How to Build (Quick'n'Dirty):
-
-You need: cmake, python and your platform's default C/C++ development environment.
-
+### 第一步：环境搭建
 ```bash
-> mkdir projects
-> cd projects
-> git clone --depth 5 https://github.com/floooh/oryol
-> cd oryol
-> ./fips build
-> ./fips run Triangle
+# 克隆项目
+git clone https://github.com/floooh/oryol.git
+cd oryol
+
+# 编译项目
+./fips build
+
+# 运行示例
+./fips run Triangle
 ```
 
-In case of problems or for more detailed build info (e.g. how to work
-with IDEs) see here: [How to Build](doc/BUILD.md)
+### 第二步：理解架构
+1. 阅读 [项目架构分析](oryol-architecture.md) 了解整体设计
+2. 查看架构图和模块关系图
+3. 理解核心模块的职责分工
 
-### Getting Started:
+### 第三步：深入学习
+1. 按照 [学习路径指南](learning-path.md) 逐步学习
+2. 阅读 [技术原理深度分析](oryol-technical-principles.md) 理解底层实现
+3. 动手实践，编写自己的示例程序
 
-* [What's New](doc/NEWS.md) (updated: 22-May-2017)
-* [How to Build](doc/BUILD.md)
-* [Design Manifesto](doc/DESIGN-MANIFESTO.md)
-* [10,000ft View](doc/OVERVIEW.md)
-* [Core Module](code/Modules/Core/README.md)
-* [IO Module](code/Modules/IO/README.md)
-* [Input Module](code/Modules/Input/README.md)
-* [Gfx Module](code/Modules/Gfx/README.md)
-* [Resource Module](code/Modules/Resource/README.md)
-* [HttpFS Module](code/Modules/HttpFS/README.md)
-* [LocalFS Module](code/Modules/LocalFS/README.md)
+## 🔍 核心概念速查
 
-### Useful Blog Posts:
+### 模块架构
+```
+应用层
+├── Core 模块 (基础服务)
+├── IO 模块 (异步资源加载)
+├── Input 模块 (输入处理)
+├── Gfx 模块 (图形渲染)
+├── Resource 模块 (资源管理)
+├── HttpFS 模块 (HTTP文件系统)
+├── LocalFS 模块 (本地文件系统)
+└── Dbg 模块 (调试工具)
+```
 
-* [System Design Philosophy](http://floooh.github.io/2017/07/01/oryol-system-design.html)
-* [SPIRV-based Shader Pipeline](http://floooh.github.io/2017/05/15/oryol-spirv.html)
-* [WebGL2/RenderPass Merge](http://floooh.github.io/2017/04/04/oryol-webgl2-merge.html)
-* [About Webpage Integration (asm.js/wasm)](http://floooh.github.io/2017/02/22/emsc-html.html)
-* [Slimmer asm.js/wasm Applications](http://floooh.github.io/2016/08/27/asmjs-diet.html)
-* [2016 Spring Cleaning](http://floooh.github.io/2016/04/26/oryol-spring-cleaning.html)
-* [Tour of 3rd-party Code (2016)](http://floooh.github.io/2016/04/09/oryol-3rd-party-code.html)
-* [Gfx Module Changes (2016)](http://floooh.github.io/2016/03/10/oryol-gfx-changes.html)
-* [Tour of the Metal Renderer](http://floooh.github.io/2016/01/15/oryol-metal-tour.html)
+### 关键设计理念
+- **轻量化**: 生成小型可执行文件
+- **跨平台**: 支持多种平台和渲染后端
+- **模块化**: 清晰的模块层次和依赖关系
+- **性能优先**: 自定义容器、内存池、零拷贝优化
+- **异步处理**: 多线程 IO 和回调机制
 
-### Extension Modules:
+### 技术特色
+- **状态机模式**: 应用生命周期管理
+- **Assign 系统**: 路径别名和 URL 解析
+- **资源句柄**: 类型安全的资源管理
+- **渲染抽象**: 统一的渲染后端接口
+- **条件编译**: 平台特定的代码组织
 
-- Skeletal Animation System: https://github.com/floooh/oryol-animation
-- Dear Imgui integration: https://github.com/floooh/oryol-imgui
-- Nuklear UI integration: https://github.com/floooh/oryol-nuklear
-- TurboBadger UI integration: https://github.com/floooh/oryol-tbui
-- OpenAL based sound module: https://github.com/floooh/oryol-sound
-- SoLoud portable audio library: https://github.com/floooh/fips-soloud
+## 📖 学习建议
 
-See the [Oryol Extension Sample](http://floooh.github.io/oryol-samples/) webpage for more interesting 3rd-party library integrations.
+### 学习顺序
+1. **基础概念** → 理解项目定位和设计理念
+2. **架构概览** → 掌握整体架构和模块关系
+3. **核心模块** → 深入学习 Core、IO、Gfx、Input 模块
+4. **技术原理** → 理解底层实现机制
+5. **实践应用** → 编写示例程序和扩展模块
 
-### Tools etc.:
+### 重点掌握
+- **模块化设计**: 理解模块间的依赖和通信
+- **跨平台抽象**: 掌握平台差异的处理策略
+- **性能优化**: 学习内存管理和渲染优化技术
+- **异步编程**: 理解回调机制和多线程处理
 
-- Oryol Asset Tools (WIP): https://github.com/floooh/oryol-tools
-- Oryol Fileformat Definitions: https://github.com/floooh/oryol-fileformats
+### 实践要点
+- 多动手编写代码
+- 尝试修改和扩展示例
+- 关注性能优化技巧
+- 理解设计思想和架构原则
 
-### Standalone App Demo:
+## 🛠️ 开发工具
 
-A simple standalone app using Oryol: https://github.com/floooh/oryol-test-app
+### 必需工具
+- **CMake**: 跨平台构建系统
+- **Python**: Fips 构建工具
+- **编译器**: MSVC、GCC、Clang 等
+- **IDE**: Visual Studio、Qt Creator、Xcode 等
 
-### Videos 
+### 推荐工具
+- **性能分析器**: 分析内存和渲染性能
+- **调试器**: 调试程序逻辑和性能问题
+- **版本控制**: Git 管理代码版本
 
-Please note that these videos use older versions of the Gfx module, details
-have changed (and will continue to change at least until the Vulkan and DX12
-renderer backends have been implemented).
+## 📝 学习记录
 
-- Coding a triangle from scratch [OSX](http://www.youtube.com/watch?v=B5R0uE5IMZs), [Windows](http://www.youtube.com/watch?v=fcmOhvVd80o)
-- [Building a standalone app](https://www.youtube.com/watch?v=z8nwrGh2Zsc)
-- [Compiling and debugging in QtCreator and CLion](https://www.youtube.com/watch?v=Sp5TywYeNzE)
+在学习过程中，建议记录以下内容：
 
-#### Enjoy! ####
+### 理论理解
+- [ ] 项目整体架构设计
+- [ ] 各模块的职责和关系
+- [ ] 关键技术原理
+- [ ] 设计模式和最佳实践
 
+### 实践能力
+- [ ] 环境搭建和项目编译
+- [ ] 基础示例程序编写
+- [ ] 模块使用和扩展
+- [ ] 性能优化和调试
 
+### 问题解决
+- [ ] 编译问题的解决方法
+- [ ] 运行时错误的调试技巧
+- [ ] 性能问题的优化策略
+- [ ] 跨平台兼容性处理
 
+## 🎉 学习成果
 
+通过系统学习 Oryol 项目，你将获得：
+
+### 技术能力
+- 轻量级游戏引擎架构设计能力
+- 跨平台 C++ 开发技术
+- 现代图形渲染系统设计
+- 高性能内存管理和异步处理
+- 模块化软件架构设计
+
+### 设计思维
+- 系统架构设计思维
+- 性能优化思维
+- 跨平台兼容性思维
+- 模块化和可扩展性思维
+
+### 实践经验
+- 实际项目开发经验
+- 性能调优和调试经验
+- 跨平台开发经验
+- 开源项目学习经验
+
+---
+
+**祝你学习愉快！** 🚀
+
+如果在学习过程中遇到问题，可以参考项目官方文档或社区资源。记住，理解比记忆更重要，多动手实践，逐步深入！ 
